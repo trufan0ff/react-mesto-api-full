@@ -1,0 +1,9 @@
+{
+  "extends": "airbnb-base",
+  // "enforceInMethodNames": true,
+  "allow": ["_id"],
+  "allowAfterThis": true,
+  "allowAfterSuper": true,
+  "allowAfterThisConstructor": true,
+  "allowFunctionParams": false
+}

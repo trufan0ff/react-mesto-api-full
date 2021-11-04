@@ -102,9 +102,8 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'http://sunrise-mesto.nomoredomains.icu',
+    baseUrl: 'api.sunrise-mesto.nomoredomains.rocks',
     headers: {
-        "authorization": 'f2f1eda8-cb60-4ee0-8ee5-825fccefe6c9',
         'Content-Type': 'application/json'
     }
 })

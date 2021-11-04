@@ -1,4 +1,4 @@
-const URL = 'https://auth.nomoreparties.co';
+const URL = 'http://api.sunrise-mesto.nomoredomains.rocks';
 
 
 

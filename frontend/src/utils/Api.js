@@ -102,7 +102,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-26',
+    baseUrl: 'http://sunrise-mesto.nomoredomains.icu',
     headers: {
         "authorization": 'f2f1eda8-cb60-4ee0-8ee5-825fccefe6c9',
         'Content-Type': 'application/json'

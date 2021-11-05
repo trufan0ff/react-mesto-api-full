@@ -1,4 +1,4 @@
-const URL = 'http://api.sunrise-mesto.nomoredomains.rocks';
+const URL = 'api.sunrise-mesto.nomoredomains.rocks';
 
 
 

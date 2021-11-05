@@ -1,5 +1,4 @@
-const URL = 'api.sunrise-mesto.nomoredomains.rocks';
-
+const URL = 'http://sunrise-mesto.nomoredomains.icu';
 
 
 export const register = (password, email) => {
@@ -9,6 +8,7 @@ export const register = (password, email) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
+        
         body: JSON.stringify({ password, email })
     })
         .then(_resultStatus);
@@ -21,6 +21,7 @@ export const authorize = (email, password) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
     })
         .then(_resultStatus)

@@ -33,31 +33,22 @@ app.use(requestLogger); // подключаем логгер запросов
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const allowedCors = [
-  'https://sunrise-mesto.nomoredomains.icu/',
-  'http://sunrise-mesto.nomoredomains.icu/',
-  'http://sunrise-mesto.nomoredomains.icu/api.sunrise-mesto.nomoredomains.rocks/',
-  'http://localhost:3000',
-];
+const cors = require('cors');
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  const { method } = req;
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-  const requestHeaders = req.headers['access-control-request-headers'];
-  res.header('Access-Control-Allow-Credentials', true);
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-  }
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.end();
-  }
-  next();
-});
+const options = {
+  origin: [
+    'http://localhost:3000',
+    'https://sunrise-mesto.nomoredomains.icu',
+    'http://sunrise-mesto.nomoredomains.icu',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
+
+app.use('*', cors(options)); // ПЕРВЫМ!
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -77,7 +68,6 @@ app.post('/signup', celebrate({
 }), createUser);
 
 
-app.use(cors(allowedCors));
 app.use(auth);
 app.use('/users', users);
 app.use('/cards', cards);

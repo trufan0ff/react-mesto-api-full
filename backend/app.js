@@ -34,11 +34,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const allowedCors = [
-  'https://sunrise-mesto.nomoredomains.icu',
-  'http://sunrise-mesto.nomoredomains.icu',
-  'http://api.sunrise-mesto.nomoredomains.rocks',
+  'https://sunrise-mesto.nomoredomains.icu/',
+  'http://sunrise-mesto.nomoredomains.icu/',
+  'http://sunrise-mesto.nomoredomains.icu/api.sunrise-mesto.nomoredomains.rocks/',
   'http://localhost:3000',
-  'http://localhost:3001',
 ];
 
 app.use((req, res, next) => {

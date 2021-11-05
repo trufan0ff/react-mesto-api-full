@@ -21,7 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* trufan@178.154.202.157:react-mesto-api-full/frontend"
+    "deploy": "npm run build && scp -r ./build/* trufan@178.154.202.157:/home/trufan/react-mesto-api-full/frontend"
   },
   "eslintConfig": {
     "extends": [

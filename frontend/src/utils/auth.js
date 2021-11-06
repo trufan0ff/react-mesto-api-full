@@ -1,4 +1,4 @@
-const URL = 'http://sunrise-mesto.nomoredomains.icu';
+const URL = 'https://api.sunrise-mesto.nomoredomains.rocks';
 
 
 export const register = (password, email) => {

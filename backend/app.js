@@ -33,11 +33,11 @@ app.use(requestLogger); // подключаем логгер запросов
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const cors = require('cors');
+
 
 const options = {
   origin: [
-    'http://localhost:3000',
+    'http://localhost:3001',
     'https://sunrise-mesto.nomoredomains.icu',
     'http://sunrise-mesto.nomoredomains.icu',
   ],
@@ -68,7 +68,8 @@ app.post('/signup', celebrate({
 }), createUser);
 
 
-app.use(auth);
+app.use('/', auth, users);
+app.use('/', auth, cards);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use('/', (req, res, next) => next(new NotFoundError('Ресурс не найден')));

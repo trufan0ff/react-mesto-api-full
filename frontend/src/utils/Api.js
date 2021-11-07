@@ -15,7 +15,7 @@ class Api {
         })
     }
 
-    addCard(name, link,token) {
+    addCard(name, link, token) {
         return fetch(`${this._url}/cards`, {
             method: 'POST',
             headers: {
@@ -44,7 +44,7 @@ class Api {
         })
     }
 
-    updateProfile(name, about,token) {
+    updateProfile(name, about, token) {
         return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
             headers: {

@@ -1,5 +1,4 @@
 const URL = 'https://api.sunrise-mesto.nomoredomains.rocks';
-const NotFoundError = require('../../../backend/errors/not-found-err');
 
 export const register = (password, email) => {
     return fetch(`${URL}/signup`, {
@@ -44,8 +43,6 @@ export const getToken = (token) => {
 const _resultStatus = (res) => {
     if (res.ok) {
         return res.json();
-    } else if (!res.ok) {
-        throw new NotFoundError('Данные не найдены');
     }
     return Promise.reject(`Ошибка: ${res.status}`);
 }

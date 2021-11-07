@@ -35,23 +35,39 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const whiteList = [
+const allowedCors = [
   'http://localhost:3000',
+  'localhost:3000',
   'http://localhost:3001',
   'api.sunrise-mesto.nomoredomains.rocks',
+  'https://api.sunrise-mesto.nomoredomains.rocks',
+  'http://api.sunrise-mesto.nomoredomains.rocks',
   'https://sunrise-mesto.nomoredomains.icu',
   'http://sunrise-mesto.nomoredomains.icu',
 ];
-const corsOptions = {
-  origin(origin, callback) {
-    if (whiteList.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-};
+app.use(function (req, res, next) {
+  const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
+  const { method } = req;
+  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+  const requestHeaders = req.headers['access-control-request-headers'];
+  res.header('Access-Control-Allow-Credentials', true);
+  // проверяем, что источник запроса есть среди разрешённых
+  if (allowedCors.includes(origin)) {
+    // устанавливаем заголовок, который разрешает браузеру запросы с этого источника
+    res.header('Access-Control-Allow-Origin', origin);
+    // устанавливаем заголовок, который разрешает браузеру запросы из любого источника
+    res.header('Access-Control-Allow-Origin', "*");
+  }
+  if (method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+  }
+  if (method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Headers', requestHeaders);
+    return res.end();
+  }
+
+  next();
+});
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -76,7 +92,7 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
-app.use(cors(corsOptions));
+app.use(cors(allowedCors));
 app.use('/', auth, users);
 app.use('/', auth, cards);
 app.use('/users', users);

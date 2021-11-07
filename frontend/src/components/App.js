@@ -56,20 +56,22 @@ function App() {
     }
 
     useEffect(() => {
-        if (loggedIn) {
-        api.getInitialCards()
-            .then((cards) => {
-                setCards(cards)
-                console.log(cards)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        const token = localStorage.getItem('token');
+        if (loggedIn) { 
+            api.getInitialCards(token)
+                .then((cards) => {
+                    setCards(cards)
+                    console.log(cards)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         }
-    }, [])
+    }, [loggedIn])
 
     useEffect(() => {
-        api.getUserInfo()
+        const token = localStorage.getItem('token');
+        api.getUserInfo(token)
             .then(res => {
                 setCurrentUser(res)
                 setLoggedIn(true)
@@ -86,7 +88,8 @@ function App() {
     }, [history, loggedIn])
 
     function handleAddPlaceSubmit({ name, link }) {
-        api.addCard(name, link)
+        const token = localStorage.getItem('token');
+        api.addCard(name, link,token)
             .then(newCard => {
                 setCards([newCard, ...cards])
                 closeAllPopups()
@@ -97,7 +100,8 @@ function App() {
     }
 
     function handleUpdateUser({ name, about }) {
-        api.updateProfile(name, about)
+        const token = localStorage.getItem('token');
+        api.updateProfile(name, about,token)
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
@@ -108,7 +112,8 @@ function App() {
     }
 
     function handleUpdateAvatar({ avatar }) {
-        api.updateAvatar(avatar)
+        const token = localStorage.getItem('token');
+        api.updateAvatar(avatar,token)
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
@@ -119,9 +124,10 @@ function App() {
     }
 
     function handleCardLike(card) {
+        const token = localStorage.getItem('token');
         const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-        (!isLiked ? api.setLikeForCard(card._id) : api.removeLikeFromCard(card._id))
+        (!isLiked ? api.setLikeForCard(card._id,token) : api.removeLikeFromCard(card._id,token))
             .then((newCard) => {
                 setCards((state) =>
                     state.map((c) => c._id === card._id ? newCard : c)
@@ -133,8 +139,9 @@ function App() {
     }
 
     function handleCardDelete(card) {
+        const token = localStorage.getItem('token');
         const isOwn = card.owner._id === currentUser._id;
-        api.deleteCard(card._id, isOwn)
+        api.deleteCard(card._id, isOwn,token)
             .then(res => {
                 setCards(cards.filter(item => { return item._id !== card._id }))
                 closeAllPopups()

@@ -57,7 +57,7 @@ function App() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (loggedIn) {
+        
             
             api.getInitialCards(token)
                 .then((cards) => {
@@ -67,8 +67,8 @@ function App() {
                 .catch((err) => {
                     console.log(err)
                 })
-        }
-    }, [loggedIn])
+        
+    }, [])
 
     useEffect(() => {
         const token = localStorage.getItem('token');

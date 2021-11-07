@@ -31,9 +31,7 @@ const app = express();
 const options = {
   origin: [
     'http://localhost:3000',
-    'localhost:3000',
     'http://localhost:3001',
-    'api.sunrise-mesto.nomoredomains.rocks',
     'https://api.sunrise-mesto.nomoredomains.rocks',
     'http://api.sunrise-mesto.nomoredomains.rocks',
     'https://sunrise-mesto.nomoredomains.icu',

@@ -6,7 +6,7 @@ export const register = (password, email) => {
         credentials: 'include',
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
+            
             'Content-Type': 'application/json'
         },
         
@@ -20,7 +20,7 @@ export const authorize = (email, password) => {
         credentials: 'include',
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
+            
             'Content-Type': 'application/json'
         },
         
@@ -34,7 +34,7 @@ export const getToken = (token) => {
         credentials: 'include',
         method: 'GET',
         headers: {
-            'Accept': 'application/json',
+            
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
         },

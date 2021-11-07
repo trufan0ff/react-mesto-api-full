@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
@@ -37,7 +38,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const options = {
   origin: [
+    'http://localhost:3000',
     'http://localhost:3001',
+    'api.sunrise-mesto.nomoredomains.rocks',
     'https://sunrise-mesto.nomoredomains.icu',
     'http://sunrise-mesto.nomoredomains.icu',
   ],
@@ -49,6 +52,12 @@ const options = {
 };
 
 app.use('*', cors(options)); // ПЕРВЫМ!
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({

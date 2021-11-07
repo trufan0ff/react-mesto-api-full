@@ -35,23 +35,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
-const options = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'api.sunrise-mesto.nomoredomains.rocks',
-    'https://sunrise-mesto.nomoredomains.icu',
-    'http://sunrise-mesto.nomoredomains.icu',
-  ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+const whiteList = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'api.sunrise-mesto.nomoredomains.rocks',
+  'https://sunrise-mesto.nomoredomains.icu',
+  'http://sunrise-mesto.nomoredomains.icu',
+];
+const corsOptions = {
+  origin(origin, callback) {
+    if (whiteList.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
-
-app.use('*', cors(options)); // ПЕРВЫМ!
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -61,7 +61,7 @@ app.get('/crash-test', () => {
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email({tlds:{allow: false}}).required(),
+    email: Joi.string().email({ tlds: { allow: false } }).required(),
     password: Joi.string().required().min(2).max(30),
   }),
 }), usersLogin);
@@ -71,12 +71,12 @@ app.post('/signup', celebrate({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
     avatar: Joi.string().custom(validateURL),
-    email: Joi.string().email({tlds: {allow: false}}).required(),
+    email: Joi.string().email({ tlds: { allow: false } }).required(),
     password: Joi.string().required().min(2),
   }),
 }), createUser);
 
-
+app.use(cors(corsOptions));
 app.use('/', auth, users);
 app.use('/', auth, cards);
 app.use('/users', users);

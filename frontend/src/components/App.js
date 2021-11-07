@@ -24,9 +24,9 @@ function App() {
     const [loggedIn, setLoggedIn] = React.useState(false)
     const [selectedCard, setSelectedCard] = React.useState(null)
     const [currentUser, setCurrentUser] = React.useState({
-        name: '',
-        about: '',
-        _id: '',
+        avatar: 'https://github.com/konjvpaljto/mesto/blob/master/src/images/avatar.jpg?raw=true',
+        name: 'Жак Ив-Кусто',
+        about: 'Исследователь океана',
     })
     const [cards, setCards] = React.useState([]);
     const [userData, setUserData] = React.useState({
@@ -56,24 +56,28 @@ function App() {
     }
 
     useEffect(() => {
+        if (loggedIn) {
         api.getInitialCards()
             .then((cards) => {
                 setCards(cards)
+                console.log(cards)
             })
             .catch((err) => {
                 console.log(err)
             })
+        }
     }, [])
 
     useEffect(() => {
         api.getUserInfo()
             .then(res => {
                 setCurrentUser(res)
+                setLoggedIn(true)
             })
             .catch((err) => {
                 console.log(err)
             })
-    }, [setCurrentUser])
+    }, [currentUser])
 
     useEffect(() => {
         if (loggedIn) {

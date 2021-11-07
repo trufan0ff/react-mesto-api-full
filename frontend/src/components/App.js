@@ -18,8 +18,6 @@ import * as auth from "../utils/auth";
 import InfoToolTip from "./InfoTooltip";
 import MenuMobile from "./MenuMobile";
 
-
-
 function App() {
     const [loggedIn, setLoggedIn] = React.useState(false)
     const [selectedCard, setSelectedCard] = React.useState(null)

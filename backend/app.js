@@ -75,8 +75,8 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
-app.use('/', auth, users);
-app.use('/', auth, cards);
+// app.use('/', auth, users);
+// app.use('/', auth, cards);
 app.use('/users', users);
 app.use('/cards', cards);
 app.use('/', (req, res, next) => next(new NotFoundError('Ресурс не найден')));

@@ -76,7 +76,6 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
-app.use(cors(allowedCors));
 app.use('/', auth, users);
 app.use('/', auth, cards);
 app.use('/users', users);

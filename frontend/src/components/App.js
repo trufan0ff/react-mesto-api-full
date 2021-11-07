@@ -57,8 +57,6 @@ function App() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        
-            
             api.getInitialCards(token)
                 .then((cards) => {
                     setCards(cards)

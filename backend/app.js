@@ -12,6 +12,7 @@ const error = require('./middlewares/error');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('cors');
+const router = require('express').Router();
 
 const validateURL = (value) => {
   if (!validator.isURL(value, { require_protocol: true })) {
@@ -28,7 +29,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   autoIndex: true,
 });
 const app = express();
-const options = {
+
+app.use(cors({
+  credentials: true,
   origin: [
     'http://localhost:3000',
     'http://localhost:3001',
@@ -37,14 +40,24 @@ const options = {
     'https://sunrise-mesto.nomoredomains.icu',
     'http://sunrise-mesto.nomoredomains.icu',
   ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-  credentials: true,
-};
+}));
+// const options = {
+//   origin: [
+//     'http://localhost:3000',
+//     'http://localhost:3001',
+//     'https://api.sunrise-mesto.nomoredomains.rocks',
+//     'http://api.sunrise-mesto.nomoredomains.rocks',
+//     'https://sunrise-mesto.nomoredomains.icu',
+//     'http://sunrise-mesto.nomoredomains.icu',
+//   ],
+//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204,
+//   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+//   credentials: true,
+// };
 
-app.use('*', cors(options));
+// app.use('*', cors(options));
 
 app.use(requestLogger); // подключаем логгер запросов
 

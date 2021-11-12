@@ -33,12 +33,10 @@ const app = express();
 app.use(cors({
   credentials: true,
   origin: [
-    'http://localhost:3000',
+    'https://localhost:3000',
     'http://localhost:3001',
-    'https://api.sunrise-mesto.nomoredomains.rocks',
-    'http://api.sunrise-mesto.nomoredomains.rocks',
-    'https://sunrise-mesto.nomoredomains.icu',
-    'http://sunrise-mesto.nomoredomains.icu',
+    'api.sunrise-mesto.nomoredomains.rocks',
+    'sunrise-mesto.nomoredomains.icu',
   ],
 }));
 // const options = {

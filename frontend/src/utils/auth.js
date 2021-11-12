@@ -1,4 +1,4 @@
-const URL = 'https://api.sunrise-mesto.nomoredomains.rocks';
+const URL = 'http://localhost:3000';
 
 export const register = (password, email) => {
     return fetch(`${URL}/signup`, {

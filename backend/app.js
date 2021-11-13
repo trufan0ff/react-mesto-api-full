@@ -30,32 +30,32 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 const app = express();
 
-app.use(cors({
-  credentials: true,
-  origin: [
-    'https://localhost:3000',
-    'http://localhost:3001',
-    'api.sunrise-mesto.nomoredomains.rocks',
-    'sunrise-mesto.nomoredomains.icu',
-  ],
-}));
-// const options = {
-//   origin: [
-//     'http://localhost:3000',
-//     'http://localhost:3001',
-//     'https://api.sunrise-mesto.nomoredomains.rocks',
-//     'http://api.sunrise-mesto.nomoredomains.rocks',
-//     'https://sunrise-mesto.nomoredomains.icu',
-//     'http://sunrise-mesto.nomoredomains.icu',
-//   ],
-//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-//   preflightContinue: false,
-//   optionsSuccessStatus: 204,
-//   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+// app.use(cors({
 //   credentials: true,
-// };
+//   origin: [
+//     'https://localhost:3000',
+//     'http://localhost:3001',
+//     'api.sunrise-mesto.nomoredomains.rocks',
+//     'sunrise-mesto.nomoredomains.icu',
+//   ],
+// }));
+const options = {
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://api.sunrise-mesto.nomoredomains.rocks',
+    'http://api.sunrise-mesto.nomoredomains.rocks',
+    'https://sunrise-mesto.nomoredomains.icu',
+    'http://sunrise-mesto.nomoredomains.icu',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
 
-// app.use('*', cors(options));
+app.use('*', cors(options));
 
 app.use(requestLogger); // подключаем логгер запросов
 

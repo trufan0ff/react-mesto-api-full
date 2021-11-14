@@ -81,7 +81,7 @@ const options = {
   "optionsSuccessStatus": 204
 };
 
-app.use('*', cors(options));
+app.use(cors(options))
 
 app.use(requestLogger); // подключаем логгер запросов
 

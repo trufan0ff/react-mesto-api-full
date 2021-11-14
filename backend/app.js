@@ -31,7 +31,6 @@ const app = express();
 
 const options = {
   origin: [
-    'https://mesto.nomoreparties.co/v1/cohort-26',
     'localhost:3001',
     'http://localhost:3001',
     'https://localhost:3001',
@@ -42,6 +41,8 @@ const options = {
     'http://api.sunrise-mesto.nomoredomains.rocks',
     'https://sunrise-mesto.nomoredomains.icu',
     'http://sunrise-mesto.nomoredomains.icu',
+    'api.sunrise-mesto.nomoredomains.rocks',
+    'sunrise-mesto.nomoredomains.icu',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,

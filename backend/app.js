@@ -21,14 +21,14 @@ const validateURL = (value) => {
   return value;
 };
 
-const allowedCors = [
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'https://api.sunrise-mesto.nomoredomains.rocks',
-  'http://api.sunrise-mesto.nomoredomains.rocks',
-  'https://sunrise-mesto.nomoredomains.icu',
-  'http://sunrise-mesto.nomoredomains.icu',
-];
+// const allowedCors = [
+//   'http://localhost:3000',
+//   'http://localhost:3001',
+//   'https://api.sunrise-mesto.nomoredomains.rocks',
+//   'http://api.sunrise-mesto.nomoredomains.rocks',
+//   'https://sunrise-mesto.nomoredomains.icu',
+//   'http://sunrise-mesto.nomoredomains.icu',
+// ];
 
 // app.use(function (req, res, next) {
 //   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
@@ -51,22 +51,6 @@ const allowedCors = [
 //   }
 //   next();
 // });
-
-
-const { PORT = 3000 } = process.env;
-
-
-mongoose.connect('mongodb://localhost:27017/mestodb', {
-  useNewUrlParser: true,
-  autoIndex: true,
-});
-const app = express();
-
-// app.use(cors({
-//   credentials: true,
-//   origin:'sunrise-mesto.nomoredomains.icu',
-// }));
-
 const options = {
   origin: [
     'http://localhost:3000',
@@ -84,6 +68,22 @@ const options = {
 };
 
 app.use('*', cors(options));
+
+const { PORT = 3000 } = process.env;
+
+
+mongoose.connect('mongodb://localhost:27017/mestodb', {
+  useNewUrlParser: true,
+  autoIndex: true,
+});
+const app = express();
+
+// app.use(cors({
+//   credentials: true,
+//   origin:'sunrise-mesto.nomoredomains.icu',
+// }));
+
+
 
 app.use(requestLogger); // подключаем логгер запросов
 

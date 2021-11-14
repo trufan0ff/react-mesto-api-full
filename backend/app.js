@@ -68,7 +68,7 @@ const app = express();
 // }));
 
 const options = {
-  origin: [
+  "origin": [
     'http://localhost:3000',
     'http://localhost:3001',
     'https://api.sunrise-mesto.nomoredomains.rocks',
@@ -76,11 +76,9 @@ const options = {
     'https://sunrise-mesto.nomoredomains.icu',
     'http://sunrise-mesto.nomoredomains.icu',
   ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-  credentials: true,
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
 };
 
 app.use('*', cors(options));

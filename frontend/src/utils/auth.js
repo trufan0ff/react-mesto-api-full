@@ -5,7 +5,6 @@ export const register = (password, email) => {
         credentials: 'include',
         method: 'POST',
         headers: {
-            
             'Content-Type': 'application/json'
         },
         

@@ -52,14 +52,7 @@ const validateURL = (value) => {
 //   next();
 // });
 const options = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://api.sunrise-mesto.nomoredomains.rocks',
-    'http://api.sunrise-mesto.nomoredomains.rocks',
-    'https://sunrise-mesto.nomoredomains.icu',
-    'http://sunrise-mesto.nomoredomains.icu',
-  ],
+  origin: "*",
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
   optionsSuccessStatus: 204,

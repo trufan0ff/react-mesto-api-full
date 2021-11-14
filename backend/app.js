@@ -21,38 +21,23 @@ const validateURL = (value) => {
   return value;
 };
 
-// const allowedCors = [
-//   'http://localhost:3000',
-//   'http://localhost:3001',
-//   'https://api.sunrise-mesto.nomoredomains.rocks',
-//   'http://api.sunrise-mesto.nomoredomains.rocks',
-//   'https://sunrise-mesto.nomoredomains.icu',
-//   'http://sunrise-mesto.nomoredomains.icu',
-// ];
+const { PORT = 3000 } = process.env;
 
-// app.use(function (req, res, next) {
-//   const { origin } = req.headers; // Сохраняем источник запроса в переменную origin
-//   // проверяем, что источник запроса есть среди разрешённых 
-//   if (allowedCors.includes(origin)) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//   }
-//   const { method } = req; // Сохраняем тип запроса (HTTP-метод) в соответствующую переменную
-//   // Значение для заголовка Access-Control-Allow-Methods по умолчанию (разрешены все типы запросов)
-//   const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
-//   const requestHeaders = req.headers['access-control-request-headers'];
-//   // Если это предварительный запрос, добавляем нужные заголовки
-//   if (method === 'OPTIONS') {
-//     // разрешаем кросс-доменные запросы любых типов (по умолчанию) 
-//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-//     // разрешаем кросс-доменные запросы с этими заголовками
-//     res.header('Access-Control-Allow-Headers', requestHeaders);
-//     // завершаем обработку запроса и возвращаем результат клиенту
-//     return res.end();
-//   }
-//   next();
-// });
+mongoose.connect('mongodb://localhost:27017/mestodb', {
+  useNewUrlParser: true,
+  autoIndex: true,
+});
+const app = express();
+
 const options = {
-  origin: "*",
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://api.sunrise-mesto.nomoredomains.rocks',
+    'http://api.sunrise-mesto.nomoredomains.rocks',
+    'https://sunrise-mesto.nomoredomains.icu',
+    'http://sunrise-mesto.nomoredomains.icu',
+  ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
   optionsSuccessStatus: 204,
@@ -62,27 +47,10 @@ const options = {
 
 app.use('*', cors(options));
 
-const { PORT = 3000 } = process.env;
-
-
-mongoose.connect('mongodb://localhost:27017/mestodb', {
-  useNewUrlParser: true,
-  autoIndex: true,
-});
-const app = express();
-
-// app.use(cors({
-//   credentials: true,
-//   origin:'sunrise-mesto.nomoredomains.icu',
-// }));
-
-
-
 app.use(requestLogger); // подключаем логгер запросов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 app.get('/crash-test', () => {
   setTimeout(() => {

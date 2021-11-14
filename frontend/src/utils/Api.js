@@ -125,6 +125,6 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'http://api.sunrise-mesto.nomoredomains.rocks',
+    baseUrl: 'https://api.sunrise-mesto.nomoredomains.rocks',
 })
 export default api;

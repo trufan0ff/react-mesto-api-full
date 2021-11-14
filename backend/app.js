@@ -67,21 +67,23 @@ const app = express();
 //   origin:'sunrise-mesto.nomoredomains.icu',
 // }));
 
-// const options = {
-//   "origin": [
-//     'http://localhost:3000',
-//     'http://localhost:3001',
-//     'https://api.sunrise-mesto.nomoredomains.rocks',
-//     'http://api.sunrise-mesto.nomoredomains.rocks',
-//     'https://sunrise-mesto.nomoredomains.icu',
-//     'http://sunrise-mesto.nomoredomains.icu',
-//   ],
-//   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   "preflightContinue": false,
-//   "optionsSuccessStatus": 204
-// };
+const options = {
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://api.sunrise-mesto.nomoredomains.rocks',
+    'http://api.sunrise-mesto.nomoredomains.rocks',
+    'https://sunrise-mesto.nomoredomains.icu',
+    'http://sunrise-mesto.nomoredomains.icu',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
 
-app.use(cors())
+app.use('*', cors(options));
 
 app.use(requestLogger); // подключаем логгер запросов
 

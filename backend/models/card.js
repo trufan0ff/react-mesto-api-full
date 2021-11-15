@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const cardSchema = new mongoose.Schema({
   name: { // у пользователя есть имя — опишем требования к имени в схеме:
@@ -16,13 +16,13 @@ const cardSchema = new mongoose.Schema({
     required: true,
   },
   likes: [{
-    type:  mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     default: [],
   }],
   createdAt: {
     type: Date,
     default: Date.now,
-  }
-})
+  },
+});
 
-module.exports = mongoose.model('card', cardSchema);
+module.exports = mongoose.model("card", cardSchema);

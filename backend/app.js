@@ -1,29 +1,28 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const users = require('./routes/users');
-const cards = require('./routes/cards');
-const { usersLogin, createUser } = require('./controllers/users');
-const bodyParser = require('body-parser');
-const { celebrate, Joi, errors } = require('celebrate');
-const validator = require('validator');
-const auth = require('./middlewares/auth');
-const error = require('./middlewares/error');
-const NotFoundError = require('./errors/not-found-err');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-const cors = require('cors');
-const router = require('express').Router();
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const { celebrate, Joi, errors } = require("celebrate");
+const validator = require("validator");
+const cors = require("cors");
+const users = require("./routes/users");
+const cards = require("./routes/cards");
+const { usersLogin, createUser } = require("./controllers/users");
+const auth = require("./middlewares/auth");
+const error = require("./middlewares/error");
+const NotFoundError = require("./errors/not-found-err");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const validateURL = (value) => {
   if (!validator.isURL(value, { require_protocol: true })) {
-    throw new Error('Неправильный формат ссылки');
+    throw new Error("Неправильный формат ссылки");
   }
   return value;
 };
 
 const { PORT = 3000 } = process.env;
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect("mongodb://localhost:27017/mestodb", {
   useNewUrlParser: true,
   autoIndex: true,
 });
@@ -31,47 +30,47 @@ const app = express();
 
 const options = {
   origin: [
-    'localhost:3001',
-    'http://localhost:3001',
-    'https://localhost:3001',
-    'https://localhost:3000',
-    'http://localhost:3000',
-    'localhost:3000',
-    'https://api.sunrise-mesto.nomoredomains.rocks',
-    'http://api.sunrise-mesto.nomoredomains.rocks',
-    'https://sunrise-mesto.nomoredomains.icu',
-    'http://sunrise-mesto.nomoredomains.icu',
-    'api.sunrise-mesto.nomoredomains.rocks',
-    'sunrise-mesto.nomoredomains.icu',
+    "localhost:3001",
+    "http://localhost:3001",
+    "https://localhost:3001",
+    "https://localhost:3000",
+    "http://localhost:3000",
+    "localhost:3000",
+    "https://api.sunrise-mesto.nomoredomains.rocks",
+    "http://api.sunrise-mesto.nomoredomains.rocks",
+    "https://sunrise-mesto.nomoredomains.icu",
+    "http://sunrise-mesto.nomoredomains.icu",
+    "api.sunrise-mesto.nomoredomains.rocks",
+    "sunrise-mesto.nomoredomains.icu",
   ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   preflightContinue: false,
   optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  allowedHeaders: ["Content-Type", "origin", "Authorization"],
   credentials: true,
 };
 
-app.use('*', cors(options));
+app.use("*", cors(options));
 
 app.use(requestLogger); // подключаем логгер запросов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/crash-test', () => {
+app.get("/crash-test", () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error("Сервер сейчас упадёт");
   }, 0);
 });
 
-app.post('/signin', celebrate({
+app.post("/signin", celebrate({
   body: Joi.object().keys({
     email: Joi.string().email({ tlds: { allow: false } }).required(),
     password: Joi.string().required().min(2).max(30),
   }),
 }), usersLogin);
 
-app.post('/signup', celebrate({
+app.post("/signup", celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
@@ -81,12 +80,12 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
-app.use('/', auth, users);
-app.use('/', auth, cards);
-app.use('/users', users);
-app.use('/cards', cards);
-router.use((req, res, next) => {
-  next(new NotFoundError('Маршрут не найден'));
+app.use("/", auth, users);
+app.use("/", auth, cards);
+app.use("/users", users);
+app.use("/cards", cards);
+app.use("/*", () => {
+  throw new NotFoundError("Запрашиваемый ресурс не найден");
 });
 app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());

@@ -8,7 +8,7 @@ const cors = require("cors");
 const users = require("./routes/users");
 const cards = require("./routes/cards");
 const { usersLogin, createUser } = require("./controllers/users");
-// const auth = require("./middlewares/auth");
+const auth = require("./middlewares/auth");
 const error = require("./middlewares/error");
 const NotFoundError = require("./errors/not-found-err");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
@@ -79,7 +79,7 @@ app.post("/signup", celebrate({
     password: Joi.string().required().min(2),
   }),
 }), createUser);
-
+app.use(auth);
 // app.use("/", auth, users);
 // app.use("/", auth, cards);
 app.use("/users", users);

@@ -32,11 +32,10 @@ class Api {
         })
     }
 
-    getUserInfo(token) {
+    getUserInfo() {
         return fetch(`${this._url}/users/me`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
             },
         })
         .then(res => {

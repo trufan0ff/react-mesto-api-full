@@ -11,6 +11,8 @@ const validateURL = (value) => {
   return value;
 };
 
+router.get("/", cards.getCards);
+
 router.post("/", celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
@@ -18,15 +20,13 @@ router.post("/", celebrate({
   }),
 }), cards.createCard);
 
-router.delete("/:cardId", celebrate({
+router.delete("/:_id", celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),
 }), cards.deleteCard);
 
-router.get("/cards", cards.getCards);
-
-router.put("/:cardId/likes", celebrate({
+router.put("/:_id/likes", celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),

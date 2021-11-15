@@ -85,9 +85,9 @@ function App() {
         }
     }, [history, loggedIn])
 
-    function handleAddPlaceSubmit( name, link ) {
+    function handleAddPlaceSubmit( {name, link} ) {
         const token = localStorage.getItem('token');
-        api.addCard(name, link, token)
+        api.addCard({name, link}, token)
             .then(newCard => {
                 setCards([newCard, ...cards])
                 closeAllPopups()
@@ -97,9 +97,9 @@ function App() {
             })
     }
 
-    function handleUpdateUser( name, about ) {
+    function handleUpdateUser( {name, about} ) {
         const token = localStorage.getItem('token');
-        api.updateProfile(name, about,token)
+        api.updateProfile({name, about},token)
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()

@@ -24,7 +24,7 @@ router.delete("/:cardId", celebrate({
   }),
 }), cards.deleteCard);
 
-router.get("/", cards.getCards);
+router.get("/cards", cards.getCards);
 
 router.put("/:cardId/likes", celebrate({
   params: Joi.object().keys({

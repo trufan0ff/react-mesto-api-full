@@ -82,8 +82,8 @@ app.post("/signup", celebrate({
 
 // app.use("/", auth, users);
 // app.use("/", auth, cards);
-app.use("/users", users);
-app.use("/cards", cards);
+app.use("/users", auth, users);
+app.use("/cards", auth, cards);
 app.use("/*", () => {
   throw new NotFoundError("Запрашиваемый ресурс не найден");
 });

@@ -109,7 +109,7 @@ function App() {
             })
     }
 
-    function handleUpdateAvatar( avatar ) {
+    function handleUpdateAvatar( {avatar} ) {
         const token = localStorage.getItem('token');
         api.updateAvatar(avatar,token)
             .then((res) => {

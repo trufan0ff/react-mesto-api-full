@@ -13,11 +13,9 @@ const validateURL = (value) => {
 
 router.get("/", users.getUsers);
 
-router.post("/", users.createUser);
-
 router.get("/me", users.getUserMe);
 
-router.get("/:id", celebrate({
+router.get("/:_id", celebrate({
   params: Joi.object().keys({
     id: Joi.string().length(24).hex(),
   }),

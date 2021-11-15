@@ -34,9 +34,9 @@ module.exports.getCurrentUsers = (req, res, next) => User.findById(req.params.id
 
 module.exports.createUser = (req, res, next) => {
   const {
-    name, about, avatar, email,
+    name, about, avatar, email, password,
   } = req.body; // получим из объекта запроса имя и описание пользователя
-  if (!req.body.password || req.body.password.length < 3) {
+  if (req.body.password.length < 3) {
     throw new ValidationError("Слишком короткий пароль");
   }
   if (!validator.isEmail(req.body.email)) {
@@ -48,7 +48,7 @@ module.exports.createUser = (req, res, next) => {
         throw new ConflictErr("Пользователь с таким email уже существует");
       }
 
-      return bcrypt.hash(req.body.password, 10);
+      return bcrypt.hash(password.toString(), 10);
     })
     .then((hash) => User.create({
 

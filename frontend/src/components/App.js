@@ -68,8 +68,8 @@ function App() {
     }, [])
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        api.getUserInfo(token)
+        
+        api.getUserInfo()
             .then(res => {
                 setCurrentUser(res)
                 setLoggedIn(true)

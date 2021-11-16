@@ -49,7 +49,7 @@ const options = {
   allowedHeaders: ["Content-Type", "origin", "Authorization"],
   credentials: true,
 };
-app.use(error);
+
 app.use("*", cors(options));
 
 app.use(requestLogger); // подключаем логгер запросов
@@ -88,5 +88,6 @@ app.all("*", (req, res, next) => {
 });
 app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());
+app.use(error);
 
 app.listen(PORT, () => console.log(`App listining on port: ${PORT}`));

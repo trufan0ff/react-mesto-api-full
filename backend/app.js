@@ -5,14 +5,14 @@ const bodyParser = require("body-parser");
 const { celebrate, Joi, errors } = require("celebrate");
 const validator = require("validator");
 const cors = require("cors");
+const router = require("express").Router();
 const users = require("./routes/users");
 const cards = require("./routes/cards");
 const { usersLogin, createUser } = require("./controllers/users");
 const auth = require("./middlewares/auth");
 const error = require("./middlewares/error");
-const NotFoundError = require("./errors/not-found-err");
+// const NotFoundError = require("./errors/not-found-err");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
-
 const validateURL = (value) => {
   if (!validator.isURL(value, { require_protocol: true })) {
     throw new Error("Неправильный формат ссылки");
@@ -82,10 +82,11 @@ app.post("/signup", celebrate({
 app.use(auth);
 app.use("/users", users);
 app.use("/cards", cards);
-app.all("*", (req, res, next) => {
-  const err = new Error("Запрашиваемый ресурс не найден");
-  err.statusCode = 404;
-  return next(err);
+router.all("*", (req, res, next) => {
+  // eslint-disable-next-line no-shadow
+  const error = new Error("Запрашиваемый ресурс не найден");
+  error.statusCode = 404;
+  return next(error);
 });
 app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());

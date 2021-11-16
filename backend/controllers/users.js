@@ -16,16 +16,38 @@ const cathIdError = (res, user) => {
   return res.status(200).send({ data: user });
 };
 
-module.exports.getUsers = (req, res, next) => {
-  User.find({})
-    .then((user) => cathIdError(res, user))
-    .catch(next);
+module.exports.getUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError("Нет пользователя с таким id");
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        next(new LoginPasswordError("Неверно введен id"));
+      }
+      next(err);
+    });
 };
 
 exports.getUserMe = (req, res, next) => {
-  User.findById(req.user._id)
-    .then((user) => cathIdError(res, user))
-    .catch(next);
+  User.findById(req.params._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError("Нет пользователя с таким id");
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        next(new LoginPasswordError("Неверно введен id"));
+      }
+      next(err);
+    });
 };
 
 module.exports.getCurrentUsers = (req, res, next) => User.findById(req.params.id)

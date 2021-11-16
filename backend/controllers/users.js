@@ -29,37 +29,17 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  User.findById(req.params._id)
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError("Нет пользователя с таким id");
-      } else {
-        res.send(user);
-      }
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        next(new LoginPasswordError("Неверно введен id"));
-      }
-      next(err);
-    });
+  User.findById(req.user)
+    .orFail(new NotFoundError("Пользователь не найден"))
+    .then((user) => res.send(user))
+    .catch((err) => next(err));
 };
 
 module.exports.getCurrentUsers = (req, res, next) => {
-  User.findById(req.params._id)
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError("Нет пользователя с таким id");
-      } else {
-        res.send(user);
-      }
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        next(new LoginPasswordError("Неверно введен id"));
-      }
-      next(err);
-    });
+  User.findById(req.params.id)
+    .orFail(new NotFoundError("Пользователь не найден"))
+    .then((user) => res.status(200).send(user))
+    .catch((err) => next(err));
 };
 
 module.exports.createUser = (req, res, next) => {

@@ -33,7 +33,7 @@ module.exports.getUser = (req, res, next) => {
     });
 };
 
-exports.getUserMe = (req, res, next) => {
+module.exports.getUserMe = (req, res, next) => {
   User.findById(req.params._id)
     .then((user) => {
       if (!user) {

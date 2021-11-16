@@ -45,9 +45,22 @@ module.exports.getUserMe = (req, res, next) => {
     });
 };
 
-module.exports.getCurrentUsers = (req, res, next) => User.findById(req.params.id)
-  .then((user) => cathIdError(res, user))
-  .catch(next);
+module.exports.getCurrentUsers = (req, res, next) => {
+  User.findById(req.params._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError("Нет пользователя с таким id");
+      } else {
+        res.send(user);
+      }
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        next(new LoginPasswordError("Неверно введен id"));
+      }
+      next(err);
+    });
+};
 
 module.exports.createUser = (req, res, next) => {
   const {

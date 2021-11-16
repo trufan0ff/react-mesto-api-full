@@ -16,7 +16,7 @@ const cathIdError = (res, user) => {
   return res.status(200).send({ data: user });
 };
 
-module.exports.getUser = (req, res, next) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
       if (!users) {

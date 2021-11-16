@@ -17,20 +17,15 @@ const cathIdError = (res, user) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  User.findById(req.user._id)
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError("Нет пользователя с таким id");
+  User.find({})
+    .then((users) => {
+      if (!users) {
+        throw new NotFoundError("Данные о пользователях не найдены!");
       } else {
-        res.send(user);
+        res.send(users);
       }
     })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        next(new LoginPasswordError("Неверно введен id"));
-      }
-      next(err);
-    });
+    .catch(next);
 };
 
 module.exports.getUserMe = (req, res, next) => {

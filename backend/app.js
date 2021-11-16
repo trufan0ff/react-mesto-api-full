@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const { celebrate, Joi, errors } = require("celebrate");
 const validator = require("validator");
 const cors = require("cors");
-const router = require("express").Router();
 const users = require("./routes/users");
 const cards = require("./routes/cards");
 const { usersLogin, createUser } = require("./controllers/users");
@@ -83,7 +82,7 @@ app.post("/signup", celebrate({
 app.use(auth);
 app.use("/users", users);
 app.use("/cards", cards);
-router.use("/*", () => {
+app.use("/", () => {
   throw new NotFoundError("Запрашиваемый ресурс не найден");
 });
 app.use(errorLogger); // подключаем логгер ошибок

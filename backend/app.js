@@ -82,9 +82,9 @@ app.post("/signup", celebrate({
 app.use(auth);
 app.use("/users", users);
 app.use("/cards", cards);
-app.use("/*", (req, res, next) => {
-  const err = new NotFoundError("Запрашиваемый ресурс не найден");
-  return next(err);
+app.use("/*", () => {
+  // eslint-disable-next-line no-new
+  new NotFoundError("Запрашиваемый ресурс не найден");
 });
 app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());

@@ -11,28 +11,28 @@ const validateURL = (value) => {
   return value;
 };
 
-router.get("/cards", cards.getCards);
+router.get("/", cards.getCards);
 
-router.post("/cards", celebrate({
+router.post("/", celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().custom(validateURL),
   }),
 }), cards.createCard);
 
-router.delete("/cards/:_id", celebrate({
+router.delete("/:_id", celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),
 }), cards.deleteCard);
 
-router.put("/cards/:_id/likes", celebrate({
+router.put("/:_id/likes", celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),
 }), cards.likeCard);
 
-router.delete("/cards/:cardId/likes", celebrate({
+router.delete("/:cardId/likes", celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex(),
   }),

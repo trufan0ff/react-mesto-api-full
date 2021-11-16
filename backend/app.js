@@ -82,7 +82,7 @@ app.post("/signup", celebrate({
 app.use(auth);
 app.use("/users", users);
 app.use("/cards", cards);
-app.use("/", () => {
+app.all("*", () => {
   throw new NotFoundError("Запрашиваемый ресурс не найден");
 });
 app.use(errorLogger); // подключаем логгер ошибок

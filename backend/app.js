@@ -5,13 +5,12 @@ const bodyParser = require("body-parser");
 const { celebrate, Joi, errors } = require("celebrate");
 const validator = require("validator");
 const cors = require("cors");
-const router = require("express").Router();
 const users = require("./routes/users");
 const cards = require("./routes/cards");
 const { usersLogin, createUser } = require("./controllers/users");
 const auth = require("./middlewares/auth");
 const error = require("./middlewares/error");
-// const NotFoundError = require("./errors/not-found-err");
+const NotFoundError = require("./errors/not-found-err");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const validateURL = (value) => {
@@ -83,11 +82,9 @@ app.post("/signup", celebrate({
 app.use(auth);
 app.use("/users", users);
 app.use("/cards", cards);
-router.all("*", (req, res, next) => {
-  // eslint-disable-next-line no-shadow
-  const error = new Error("Запрашиваемый ресурс не найден");
-  error.statusCode = 404;
-  return next(error);
+app.all("*", (req, res, next) => {
+  const err = new NotFoundError("Запрашиваемый ресурс не найден");
+  return next(err);
 });
 app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());

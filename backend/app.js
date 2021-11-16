@@ -82,8 +82,10 @@ app.post("/signup", celebrate({
 app.use(auth);
 app.use("/users", users);
 app.use("/cards", cards);
-app.all("*", () => {
-  throw new NotFoundError("Запрашиваемый ресурс не найден");
+app.all("*", (req, res, next) => {
+  const err = new Error("Запрашиваемый ресурс не найден");
+  err.statusCode = 404;
+  return next(err);
 });
 app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());

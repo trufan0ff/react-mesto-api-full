@@ -175,13 +175,14 @@ function App() {
     }
 
     const tokenCheck = () => {
-        const token = localStorage.getItem("token")
-        if (token) {
+        if (localStorage.getItem("token")) {
+            const token = localStorage.getItem("token")
             auth.getToken(token)
                 .then((res) => {
                     if (res) {
-                        setUserData({ email: res.data.email })
+                        setUserData({ email: res.email })
                         setLoggedIn(true)
+                        history.push("/")
                     }
                 })
                 .catch((err) => console.log(err))

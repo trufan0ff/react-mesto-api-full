@@ -2,7 +2,6 @@ const URL = 'https://api.sunrise-mesto.nomoredomains.rocks';
 
 export const register = (password, email) => {
     return fetch(`${URL}/signup`, {
-        credentials: 'include',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -15,7 +14,6 @@ export const register = (password, email) => {
 };
 export const authorize = (email, password) => {
     return fetch(`${URL}/signin`, {
-        credentials: 'include',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -28,7 +26,6 @@ export const authorize = (email, password) => {
 
 export const getToken = (token) => {
     return fetch(`${URL}/users/me`, {
-        credentials: 'include',
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

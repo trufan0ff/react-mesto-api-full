@@ -57,14 +57,13 @@ function App() {
 
     useEffect(() => {
         if (loggedIn) {
-            const promises = [api.getUserInfo(), api.getInitialCards()];
-
-            Promise.all(promises)
-                .then(([user, cards]) => {
-                    setCurrentUser(user);
-                    setCards(cards);
+            api.getInitialCards()
+                .then((res) => {
+                    setCards(res);
                 })
-                .catch((err) => console.log(`Error ${err}`));
+                .catch((err) => {
+                    console.log(err)
+                });
         }
     }, [loggedIn]);
 

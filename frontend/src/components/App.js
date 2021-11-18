@@ -77,7 +77,7 @@ function App() {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [currentUser])
 
     useEffect(() => {
         if (loggedIn) {
@@ -90,6 +90,7 @@ function App() {
             .then(newCard => {
                 setCards([newCard, ...cards])
                 closeAllPopups()
+                history.push("/")
             })
             .catch((err) => {
                 console.log(err)
@@ -101,6 +102,7 @@ function App() {
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
+                history.push("/")
             })
             .catch((err) => {
                 console.log(err)
@@ -112,6 +114,7 @@ function App() {
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
+                history.push("/")
             })
             .catch((err) => {
                 console.log(err)

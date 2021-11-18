@@ -56,14 +56,14 @@ function App() {
     }
 
     useEffect(() => {
-        api.getInitialCards()
-            .then((cards) => {
-                setCards(cards)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-
+            api.getInitialCards()
+                .then((cards) => {
+                    setCards(cards)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        
     }, [])
 
     useEffect(() => {
@@ -83,37 +83,37 @@ function App() {
         }
     }, [history, loggedIn])
 
-    function handleAddPlaceSubmit({ name, link }) {
-        api.addCard({ name, link })
-            .then((newCard) => {
-                setCards([...cards, newCard]);
-                closeAllPopups();
+    function handleAddPlaceSubmit( {name, link} ) {
+        api.addCard({name, link})
+            .then(newCard => {
+                setCards([newCard,...cards])
+                closeAllPopups()
             })
             .catch((err) => {
                 console.log(err)
-            });
+            })
     }
 
-    function handleUpdateUser({ name, about }) {
-        api.updateProfile({ name, about })
-            .then((result) => {
-                setCurrentUser(result);
-                closeAllPopups();
+    function handleUpdateUser( {name, about} ) {
+        api.updateProfile({name, about})
+            .then((res) => {
+                setCurrentUser(res)
+                closeAllPopups()
             })
             .catch((err) => {
                 console.log(err)
-            });
+            })
     }
 
-    function handleUpdateAvatar({ avatar }) {
-        api.updateAvatar({ avatar })
-            .then((result) => {
-                setCurrentUser(result);
-                closeAllPopups();
+    function handleUpdateAvatar( {avatar} ) {
+        api.updateAvatar({avatar})
+            .then((res) => {
+                setCurrentUser(res)
+                closeAllPopups()
             })
             .catch((err) => {
                 console.log(err)
-            });
+            })
     }
 
     function handleCardLike(card) {
@@ -183,7 +183,7 @@ function App() {
 
     useEffect(() => {
         tokenCheck();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

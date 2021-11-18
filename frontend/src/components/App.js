@@ -95,7 +95,7 @@ function App() {
     }
 
     function handleUpdateUser({ name, about }) {
-        api.editProfile({ name, about })
+        api.updateProfile({ name, about })
             .then((result) => {
                 setCurrentUser(result);
                 closeAllPopups();
@@ -106,7 +106,7 @@ function App() {
     }
 
     function handleUpdateAvatar({ avatar }) {
-        api.editAvatar({ avatar })
+        api.updateAvatar({ avatar })
             .then((result) => {
                 setCurrentUser(result);
                 closeAllPopups();

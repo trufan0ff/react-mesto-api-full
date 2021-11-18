@@ -56,15 +56,17 @@ function App() {
     }
 
     useEffect(() => {
-            api.getInitialCards()
-                .then((cards) => {
-                    setCards(cards)
+        if (loggedIn) {
+            const promises = [api.getUserInfo(), api.getInitialCards()];
+
+            Promise.all(promises)
+                .then(([user, cards]) => {
+                    setCurrentUser(user);
+                    setCards(cards);
                 })
-                .catch((err) => {
-                    console.log(err)
-                })
-        
-    }, [])
+                .catch((err) => console.log(`Error ${err}`));
+        }
+    }, [loggedIn]);
 
     useEffect(() => {
         api.getUserInfo()
@@ -83,10 +85,10 @@ function App() {
         }
     }, [history, loggedIn])
 
-    function handleAddPlaceSubmit( {name, link} ) {
-        api.addCard({name, link})
+    function handleAddPlaceSubmit({ name, link }) {
+        api.addCard({ name, link })
             .then(newCard => {
-                setCards([newCard,...cards])
+                setCards([newCard, ...cards])
                 closeAllPopups()
             })
             .catch((err) => {
@@ -94,8 +96,8 @@ function App() {
             })
     }
 
-    function handleUpdateUser( {name, about} ) {
-        api.updateProfile({name, about})
+    function handleUpdateUser({ name, about }) {
+        api.updateProfile({ name, about })
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
@@ -105,8 +107,8 @@ function App() {
             })
     }
 
-    function handleUpdateAvatar( {avatar} ) {
-        api.updateAvatar({avatar})
+    function handleUpdateAvatar({ avatar }) {
+        api.updateAvatar({ avatar })
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
@@ -183,7 +185,7 @@ function App() {
 
     useEffect(() => {
         tokenCheck();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

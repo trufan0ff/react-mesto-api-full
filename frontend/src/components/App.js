@@ -74,7 +74,7 @@ function App() {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [currentUser.name, currentUser.about, currentUser.avatar])
 
     useEffect(() => {
         if (loggedIn) {
@@ -103,7 +103,6 @@ function App() {
             .catch((err) => {
                 console.log(err)
             })
-            api.getUserInfo()
     }
 
     function handleUpdateAvatar( avatar ) {

@@ -63,7 +63,7 @@ function App() {
                 .catch((err) => {
                     console.log(err)
                 });
-        },[currentUser])
+        },[])
 
     useEffect(() => {
         api.getUserInfo()
@@ -99,9 +99,11 @@ function App() {
                 setCurrentUser(res)
                 closeAllPopups()
             })
+            
             .catch((err) => {
                 console.log(err)
             })
+            api.getUserInfo()
     }
 
     function handleUpdateAvatar( avatar ) {

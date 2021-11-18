@@ -15,7 +15,7 @@ class Api {
         })
     }
 
-    addCard(name, link) {
+    addCard({name, link}) {
         return fetch(`${this._url}/cards`, {
             method: 'POST',
             headers: {
@@ -23,8 +23,8 @@ class Api {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify({
-                name: name,
-                link: link
+                name,
+                link,
             })
         })
         .then(res => {
@@ -44,16 +44,16 @@ class Api {
         })
     }
 
-    updateProfile(name, about) {
+    updateProfile({name, about}) {
         return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
             headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: JSON.stringify({
-                name: name,
-                about: about
+                name,
+                about,
             })
         }) 
         .then(res => {
@@ -100,15 +100,16 @@ class Api {
         })
     }
 
-    updateAvatar(link) {
+    updateAvatar({avatar}) {
         return fetch(`${this._url}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                
             },
             body: JSON.stringify({
-                avatar: link
+                avatar: `${avatar}`,
             })
         })
         .then(res => {

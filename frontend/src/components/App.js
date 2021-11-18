@@ -56,8 +56,7 @@ function App() {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-            api.getInitialCards(token)
+            api.getInitialCards()
                 .then((cards) => {
                     setCards(cards)
                 })
@@ -68,7 +67,6 @@ function App() {
     }, [])
 
     useEffect(() => {
-        
         api.getUserInfo()
             .then(res => {
                 setCurrentUser(res)
@@ -77,7 +75,7 @@ function App() {
             .catch((err) => {
                 console.log(err)
             })
-    }, [currentUser])
+    }, [])
 
     useEffect(() => {
         if (loggedIn) {
@@ -86,8 +84,7 @@ function App() {
     }, [history, loggedIn])
 
     function handleAddPlaceSubmit( {name, link} ) {
-        const token = localStorage.getItem('token');
-        api.addCard({name, link}, token)
+        api.addCard({name, link})
             .then(newCard => {
                 setCards([newCard, ...cards])
                 closeAllPopups()
@@ -98,8 +95,7 @@ function App() {
     }
 
     function handleUpdateUser( {name, about} ) {
-        const token = localStorage.getItem('token');
-        api.updateProfile({name, about},token)
+        api.updateProfile({name, about})
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
@@ -110,8 +106,7 @@ function App() {
     }
 
     function handleUpdateAvatar( {avatar} ) {
-        const token = localStorage.getItem('token');
-        api.updateAvatar(avatar,token)
+        api.updateAvatar(avatar)
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
@@ -122,10 +117,8 @@ function App() {
     }
 
     function handleCardLike(card) {
-        const token = localStorage.getItem('token');
         const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-        (!isLiked ? api.setLikeForCard(card._id,token) : api.removeLikeFromCard(card._id,token))
+        (!isLiked ? api.setLikeForCard(card._id) : api.removeLikeFromCard(card._id))
             .then((newCard) => {
                 setCards((state) =>
                     state.map((c) => c._id === card._id ? newCard : c)
@@ -137,9 +130,8 @@ function App() {
     }
 
     function handleCardDelete(card) {
-        const token = localStorage.getItem('token');
         const isOwn = card.owner._id === currentUser._id;
-        api.deleteCard(card._id, isOwn,token)
+        api.deleteCard(card._id, isOwn)
             .then(res => {
                 setCards(cards.filter(item => { return item._id !== card._id }))
                 closeAllPopups()
@@ -174,14 +166,14 @@ function App() {
         setIsInfoToolTipOpen(false)
     }
 
-    const tokenCheck = () => {
+    function tokenCheck() {
         if (localStorage.getItem("token")) {
             const token = localStorage.getItem("token")
             auth.getToken(token)
                 .then((res) => {
                     if (res) {
-                        setUserData({ email: res.email })
                         setLoggedIn(true)
+                        setUserData({ email: res.email })
                         history.push("/")
                     }
                 })
@@ -190,7 +182,8 @@ function App() {
     }
 
     useEffect(() => {
-        tokenCheck()
+        tokenCheck();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

@@ -77,7 +77,7 @@ function App() {
             .catch((err) => {
                 console.log(err)
             })
-    })
+    }, [currentUser])
 
     useEffect(() => {
         if (loggedIn) {

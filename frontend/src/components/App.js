@@ -77,7 +77,7 @@ function App() {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [currentUser])
 
     useEffect(() => {
         if (loggedIn) {
@@ -85,36 +85,33 @@ function App() {
         }
     }, [history, loggedIn])
 
-    function handleAddPlaceSubmit({ name, link }) {
-        api.addCard({ name, link })
+    function handleAddPlaceSubmit( name, link ) {
+        api.addCard( name, link )
             .then(newCard => {
                 setCards([newCard, ...cards])
                 closeAllPopups()
-                history.push("/")
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
-    function handleUpdateUser({ name, about }) {
-        api.updateProfile({ name, about })
+    function handleUpdateUser( name, about ) {
+        api.updateProfile( name, about )
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
-                history.push("/")
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
-    function handleUpdateAvatar({ avatar }) {
-        api.updateAvatar({ avatar })
+    function handleUpdateAvatar( avatar ) {
+        api.updateAvatar( avatar )
             .then((res) => {
                 setCurrentUser(res)
                 closeAllPopups()
-                history.push("/")
             })
             .catch((err) => {
                 console.log(err)

@@ -84,7 +84,7 @@ function App() {
     }, [history, loggedIn])
 
     function handleAddPlaceSubmit({ name, link }) {
-        api.addNewCard({ name, link })
+        api.addCard({ name, link })
             .then((newCard) => {
                 setCards([...cards, newCard]);
                 closeAllPopups();

@@ -63,7 +63,7 @@ function App() {
                 .catch((err) => {
                     console.log(err)
                 });
-        },[])
+        },[currentUser])
 
     useEffect(() => {
         api.getUserInfo()
